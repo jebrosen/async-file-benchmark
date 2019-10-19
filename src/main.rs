@@ -1,9 +1,3 @@
-// async-std = "=0.99.9"
-// futures-preview = "=0.3.0-alpha.19"
-// tokio = "=0.2.0-alpha.6"
-// env_logger = "0.6"
-
-
 use std::error::Error;
 use std::future::Future;
 use std::time::Duration;

@@ -10,7 +10,6 @@ edition = "2018"
 #async-std = "=0.99.9"
 async-std = { git = "https://github.com/stjepang/async-std", branch = "fix-recursive-block_on" }
 futures-preview = "=0.3.0-alpha.19"
-#tokio = "=0.2.0-alpha.6"
+tokio = "=0.2.0-alpha.6"
 #tokio = { git = "https://github.com/tokio-rs/tokio", branch = "master" }
-tokio = { git = "https://github.com/tokio-rs/tokio", branch = "new-scheduler" }
 env_logger = "0.6"
