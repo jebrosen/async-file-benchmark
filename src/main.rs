@@ -3,11 +3,11 @@ use std::future::Future;
 use std::time::Duration;
 
 fn describe_header() {
-    println!("{}\t{}\t{}", "runtime", "fs", "time per");
+    println!("{}\t{}", "runtime", "time per");
 }
 
-fn describe_result(runtime: &str, fs: &str, time: Duration) {
-    println!("{}\t{}\t{}.{:03}", runtime, fs, time.as_secs(), time.subsec_millis());
+fn describe_result(runtime: &str, time: Duration) {
+    println!("{}\t{}.{:03}", runtime, time.as_secs(), time.subsec_millis());
 }
 
 // Runs the future returned by 'f()' 'count' times, in parallel.
@@ -28,7 +28,7 @@ where
     Ok(times.iter().sum::<Duration>().checked_div(count).expect("count > 0"))
 }
 
-const BUF_SIZE: usize = 1024;
+const BUF_SIZE: usize = 2048;
 
 async fn discard<T>(_x: T) {
     // TODO: this should probably be a black-box
@@ -73,13 +73,15 @@ async fn read_file_tokio() -> Result<(), Box<dyn Error>> {
 }
 
 // Runs 'count' file-reading tasks with each fs implementation.
-async fn run_benchmark(runtime_name: Option<&str>, count: u32) {
-    let time_tokio = time_many(read_file_tokio, count).await.expect("failed to time tokio file");
-    let time_async_std = time_many(read_file_async_std, count).await.expect("failed to time async_std file");
+async fn run_benchmark<F, Fut>(func: F, name: Option<&str>, count: u32)
+where
+    F: Fn() -> Fut,
+    Fut: Future<Output=Result<(), Box<dyn Error>>>,
+{
+    let time = time_many(func, count).await.expect("failed to time");
 
-    if let Some(runtime) = runtime_name {
-        describe_result(runtime, "tokio", time_tokio);
-        describe_result(runtime, "a_std", time_async_std);
+    if let Some(name) = name {
+        describe_result(name, time);
     }
 }
 
@@ -89,12 +91,12 @@ fn main() {
     let tokio_rt = tokio::runtime::Runtime::new().unwrap();
 
     // Warm up
-    tokio_rt.block_on(run_benchmark(None, 100));
-    async_std::task::block_on(run_benchmark(None, 100));
+    tokio_rt.block_on(run_benchmark(read_file_tokio, None, 100));
+    async_std::task::block_on(run_benchmark(read_file_async_std, None, 100));
 
     describe_header();
 
     // Real thing
-    tokio_rt.block_on(run_benchmark(Some("tokio"), 5000));
-    async_std::task::block_on(run_benchmark(Some("a_std"), 5000));
+    tokio_rt.block_on(run_benchmark(read_file_tokio, Some("tokio"), 5000));
+    async_std::task::block_on(run_benchmark(read_file_async_std, Some("async-std"), 5000));
 }

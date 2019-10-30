@@ -7,9 +7,9 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-#async-std = "=0.99.9"
-async-std = { git = "https://github.com/stjepang/async-std", branch = "fix-recursive-block_on" }
+#async-std = "=0.99.10"
+async-std = { git = "https://github.com/async-rs/async-std", branch = "master" }
 futures-preview = "=0.3.0-alpha.19"
-tokio = "=0.2.0-alpha.6"
-#tokio = { git = "https://github.com/tokio-rs/tokio", branch = "master" }
+#tokio = "=0.2.0-alpha.6"
+tokio = { git = "https://github.com/tokio-rs/tokio", branch = "master" }
 env_logger = "0.6"
