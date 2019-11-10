@@ -88,7 +88,7 @@ where
 fn main() {
     env_logger::init();
 
-    let tokio_rt = tokio::runtime::Runtime::new().unwrap();
+    let mut tokio_rt = tokio::runtime::Runtime::new().unwrap();
 
     // Warm up
     tokio_rt.block_on(run_benchmark(read_file_tokio, None, 100));
