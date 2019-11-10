@@ -37,7 +37,7 @@ async fn discard<T>(_x: T) {
 async fn read_file_async_std() -> Result<(), Box<dyn Error>> {
     use async_std::prelude::*;
 
-    let mut file = async_std::fs::File::open("file.dat").await?;
+    let mut file = async_std::fs::File::open("async_std.dat").await?;
     loop {
         let mut buf = vec![0; BUF_SIZE];
         match file.read(&mut buf).await {
@@ -56,7 +56,7 @@ async fn read_file_async_std() -> Result<(), Box<dyn Error>> {
 async fn read_file_tokio() -> Result<(), Box<dyn Error>> {
     use tokio::io::AsyncReadExt;
 
-    let mut file = tokio::fs::File::open("file.dat").await?;
+    let mut file = tokio::fs::File::open("tokio.dat").await?;
     loop {
         let mut buf = vec![0; BUF_SIZE];
         match file.read(&mut buf).await {
