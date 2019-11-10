@@ -3,7 +3,7 @@ use std::future::Future;
 use std::time::Duration;
 
 fn describe_header() {
-    println!("{}\t{}", "runtime", "time per");
+    println!("{}\t\t{}", "runtime", "time per");
 }
 
 fn describe_result(runtime: &str, time: Duration) {
@@ -97,6 +97,6 @@ fn main() {
     describe_header();
 
     // Real thing
-    tokio_rt.block_on(run_benchmark(read_file_tokio, Some("tokio"), 5000));
+    tokio_rt.block_on(run_benchmark(read_file_tokio, Some("tokio\t"), 5000));
     async_std::task::block_on(run_benchmark(read_file_async_std, Some("async-std"), 5000));
 }
