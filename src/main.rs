@@ -103,14 +103,12 @@ fn main() {
 
     let mut tokio_rt = tokio::runtime::Runtime::new().unwrap();
 
-    // Warm up
-    tokio_rt.block_on(run_benchmark(read_file_tokio, None, 100));
-    async_std::task::block_on(run_benchmark(read_file_async_std, None, 100));
-
     describe_header();
 
-    // Real thing
-    async_std::task::block_on(run_benchmark(read_file_async_std, Some("async-std"), 5000));
-    tokio_rt.block_on(run_benchmark(read_file_tokio, Some("tokio\t"), 5000));
+    const TASK_COUNT: u32 = 5000;
 
+    for _ in 0..6 {
+        async_std::task::block_on(run_benchmark(read_file_async_std, Some("async-std"), TASK_COUNT));
+        tokio_rt.block_on(run_benchmark(read_file_tokio, Some("tokio\t"), TASK_COUNT));
+    }
 }
