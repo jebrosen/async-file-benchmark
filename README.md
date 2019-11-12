@@ -1,10 +1,30 @@
 # async-file-benchmark
 
-NOTICE: This probably does not benchmark what anyone thinks it does. The I/O
-pattern and the benchmark itself is fairly contrived and semi-purposefully
-anti-optimized. The only thing I would really trust with this benchmark is to
-compare different commits of each project against themselves to test changes
-in schedulers or threadpool handling.
+## Preface
+
+This benchmark should *not* be used as-is as a performance comparision between
+`async-std` and `tokio`. It was designed to highlight certain pathological
+cases and does not reflect a realistic or recommended usage pattern.
+
+There are several issues with using this as a direct comparative benchmark:
+
+* The number of tasks and buffer size are unrealistic, and adjusting them can
+  affect results dramatically.
+* It uses default configurations of both libraries. These default
+  configurations might not actually be suitable for this workload, and even
+  under default *operating system configurations* this benchmark will not run.
+* It uses arbitrary versions of the libraries, e.g. master branches at the time
+  I last ran and subsequently committed changes. Using the latest master or
+  latest releases is often more useful (and please indicate exact version
+  numbers or commit hashes when discussing or comparing results for
+  reproducibility).
+    * At the time of this writing `tokio` is undergoing several major
+      refactorings, and those results are likely to change significantly
+      in the future.
+
+The benchmark is most useful for tracking changes in executors, e.g. "did
+change X really improve Y, as measured by this benchmark", and as a stress
+test.
 
 ## Setup
 
