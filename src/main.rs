@@ -35,25 +35,18 @@ const FILE_SIZE: usize = 256 * 1024;
 // async-std, and tokio all use a 8192-byte buffer.
 const BUF_SIZE: usize = 2048;
 
-async fn discard<T>(_x: T) {
-    // TODO: this should probably be a black-box
-}
-
 async fn read_file_async_std() -> Result<(), Box<dyn Error>> {
     use async_std::prelude::*;
 
     let mut file = async_std::fs::File::open("file.dat").await?;
     let mut total_read = 0;
+    let mut buf = [0; BUF_SIZE];
     loop {
-        let mut buf = vec![0; BUF_SIZE];
-        match file.read(&mut buf).await {
-            Ok(n) if n == 0 => break,
-            Ok(n) => {
-                buf.truncate(n);
+        match file.read(&mut buf).await? {
+            0 => break,
+            n => {
                 total_read += n;
-                discard(buf).await;
             }
-            Err(e) => return Err(e)?,
         }
     }
 
@@ -67,16 +60,13 @@ async fn read_file_tokio() -> Result<(), Box<dyn Error>> {
 
     let mut file = tokio::fs::File::open("file.dat").await?;
     let mut total_read = 0;
+    let mut buf = [0; BUF_SIZE];
     loop {
-        let mut buf = vec![0; BUF_SIZE];
-        match file.read(&mut buf).await {
-            Ok(n) if n == 0 => break,
-            Ok(n) => {
-                buf.truncate(n);
+        match file.read(&mut buf).await? {
+            0 => break,
+            n => {
                 total_read += n;
-                discard(buf).await;
             }
-            Err(e) => return Err(e)?,
         }
     }
 
