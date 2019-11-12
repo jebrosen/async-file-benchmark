@@ -97,6 +97,7 @@ fn main() {
     describe_header();
 
     // Real thing
-    tokio_rt.block_on(run_benchmark(read_file_tokio, Some("tokio\t"), 5000));
     async_std::task::block_on(run_benchmark(read_file_async_std, Some("async-std"), 5000));
+    tokio_rt.block_on(run_benchmark(read_file_tokio, Some("tokio\t"), 5000));
+
 }
