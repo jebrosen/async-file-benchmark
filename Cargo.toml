@@ -7,8 +7,7 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-async-std = "1.0.1"
+async-std = "1.2.0"
 futures-preview = "=0.3.0-alpha.19"
-#tokio = "=0.2.0-alpha.6"
-tokio = { git = "https://github.com/tokio-rs/tokio", branch = "master" }
+tokio = { version = "0.2.1", features = ["full"] }
 env_logger = "0.6"

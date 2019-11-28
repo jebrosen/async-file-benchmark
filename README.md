@@ -13,14 +13,6 @@ There are several issues with using this as a direct comparative benchmark:
 * It uses default configurations of both libraries. These default
   configurations might not actually be suitable for this workload, and even
   under default *operating system configurations* this benchmark will not run.
-* It uses arbitrary versions of the libraries, e.g. master branches at the time
-  I last ran and subsequently committed changes. Using the latest master or
-  latest releases is often more useful (and please indicate exact version
-  numbers or commit hashes when discussing or comparing results for
-  reproducibility).
-    * At the time of this writing `tokio` is undergoing several major
-      refactorings, and those results are likely to change significantly
-      in the future.
 
 The benchmark is most useful for tracking changes in executors, e.g. "did
 change X really improve Y, as measured by this benchmark", and as a stress
