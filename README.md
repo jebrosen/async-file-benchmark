@@ -1,5 +1,11 @@
 # async-file-benchmark
 
+## ⚠ WARNING: UNMAINTAINED PROJECT ⚠
+
+This project is no longer maintained. In addition to the caveats listed below,
+it has not been updated for the latest versions of packages and has some known
+problems such as https://github.com/jebrosen/async-file-benchmark/issues/6.
+
 ## Preface
 
 This benchmark should *not* be used as-is as a performance comparision between

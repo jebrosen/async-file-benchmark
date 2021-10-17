@@ -3,6 +3,9 @@ use std::future::Future;
 use std::time::Duration;
 
 fn describe_header() {
+    println!("WARNING: This project is outdated and unmaintained and has several known issues.");
+    println!("\tPlease see the README for more information.");
+    println!();
     println!("{}\t\t{}", "runtime", "time per");
 }
 
